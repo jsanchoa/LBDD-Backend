@@ -1,7 +1,7 @@
 import database from "../database/DatabaseConnection.js";
 
 export const getUsuarios = async() => {
-    return await database.query(`SELECT "id_usuario", "nombre", "apellido", "correo", "telefono", "cedula", "estado" FROM "USUARIOS"`,
+    return await database.query(`SELECT id_usuario, nombre, apellido, correo, telefono, cedula, estado FROM USUARIOS`,
         {
       type: database.QueryTypes.SELECT
         }
@@ -13,7 +13,7 @@ export const getUsuarios = async() => {
 export const getUsuarioInfo = async(id) => {
 
   return await database.query(
-    `SELECT "id_usuario", "nombre", "apellido", "correo", "telefono", "cedula", "id_rol", "estado" FROM "USUARIOS" WHERE "id_usuario" = :p_id_usuario`,
+    `SELECT id_usuario, nombre, apellido, correo, telefono, cedula, id_rol, estado FROM USUARIOS WHERE id_usuario = :p_id_usuario`,
     {
       replacements: { p_id_usuario: id },
       type: database.QueryTypes.SELECT
@@ -25,12 +25,14 @@ export const crearUsuario = async(data) => {
 
   const { nombre, apellido, correo, telefono, cedula, id_rol } = data;
 
+  const contrasena = "prueba"
+
   return await database.query(
     `BEGIN
-       paquete_usuarios.insertar_usuario(:p_nombre, :p_apellido, :p_correo, :p_telefono, :p_cedula, :p_rol);
+       paquete_usuarios.insertar_usuario(:p_nombre, :p_apellido, :p_correo, :p_telefono, :p_cedula, :p_rol, :p_contrasena);
      END;`,
     {
-      replacements: { p_nombre: nombre, p_apellido: apellido, p_correo: correo, p_telefono: telefono, p_cedula: cedula, p_rol: id_rol },
+      replacements: { p_nombre: nombre, p_apellido: apellido, p_correo: correo, p_telefono: telefono, p_cedula: cedula, p_rol: id_rol, p_contrasena: contrasena },
       type: database.QueryTypes.INSERT
     }
   );

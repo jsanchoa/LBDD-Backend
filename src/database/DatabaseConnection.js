@@ -9,7 +9,8 @@ const database = new Sequelize
   port: 1521,
   dialectOptions: {
     connectString: 'localhost:1521/XE'
-  }
+  },
+  quoteIdentifiers: false
 });
 
 export default database;

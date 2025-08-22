@@ -23,7 +23,7 @@ Usuarios.init(
             type: DataTypes.STRING(50),
             allowNull: false
         }, 
-        contrasenia: {
+        contrasena: {
             type: DataTypes.STRING(50),
             allowNull: true
         },
